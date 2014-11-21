@@ -52,7 +52,6 @@ public class processLogin extends HttpServlet {
 			} else {
 				dispatcher = request.getRequestDispatcher("user.jsp");
 			}
-			dispatcher.forward(request, response);
 		} else {
 			dispatcher = request.getRequestDispatcher("main.jsp");
 		}
