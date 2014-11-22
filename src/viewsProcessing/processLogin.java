@@ -42,7 +42,7 @@ public class processLogin extends HttpServlet {
 		String password = request.getParameter("password");
 
 		User user = new User(username, password);
-		UserManager userManager = new UserManager(user);
+		UserManager userManager = new UserManager();
 		RequestDispatcher dispatcher;
 		
 		if (userManager.isValidUser()) {

@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<% User user = (User)request.getAttribute("user"); %>
-	HOLA <%=user.getUsername()%> ADMIN!
+	HOLA ${requestScope.user.username} ADMIN!
 </body>
 </html>

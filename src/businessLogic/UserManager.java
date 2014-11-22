@@ -10,14 +10,12 @@ public class UserManager {
 	 * @param password
 	 * @return true if username is registered. False otherwise.
 	 */
-	public UserManager(User user) {
-		this.user = user;
+	public UserManager() {
 	}
 	public boolean isValidUser() {
-		UserDataAccess dao = new UserDataAccess();
-		dao.findUser(user);
 		return true;
-		//return dao.findUser(user) != null;
+		//dao.validateUser(user);
+		//return user.isValid();
 	}
 	public boolean isAdmin() {
 		return true;

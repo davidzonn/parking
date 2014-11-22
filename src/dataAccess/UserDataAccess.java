@@ -14,18 +14,20 @@ public class UserDataAccess {
 		ResultSet rs = database.executeStatement(sql);
 		int rsSize;
 		try {
-			while (rs.next()) {
-				System.out.println(rs.getString("username"));
-			}
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-		try {
+			rs.last();
 			rsSize = rs.getRow();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public Collection<String> resultSetToUser (ResultSet rs) throws SQLException {
+		Collection<String> user = new java.util.ArrayList<String>();
+		while (rs.next()) {
+			
+		}
+		return user;
 	}
 	
 }
