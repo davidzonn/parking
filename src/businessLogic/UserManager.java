@@ -15,6 +15,7 @@ public class UserManager {
 	}
 	public boolean isValidUser() {
 		UserDataAccess dao = new UserDataAccess();
+		dao.findUser(user);
 		return true;
 		//return dao.findUser(user) != null;
 	}
