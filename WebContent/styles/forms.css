@@ -1,0 +1,17 @@
+body {
+    background-color: lightblue;
+}
+
+form {
+    width: 50%;
+    height: 50%;
+    margin-left: auto;
+    margin-right: auto; /*Setting both margins to auto makes browser divide them equally, effectively centering the element.*/
+	
+}
+
+label {
+    float: left;
+    width: 20%;
+    text-align: right;    /* Text is a box (as specified on "label, input". Here we say: "put the actual text to the right of this box. */
+}

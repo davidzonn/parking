@@ -48,14 +48,13 @@ public class processLogin extends HttpServlet {
 		if (userManager.isValidUser()) {
 			request.setAttribute("user", user);
 			if (userManager.isAdmin()) {
-				dispatcher = request.getRequestDispatcher("admin.jsp");
+				dispatcher = request.getRequestDispatcher("admin.jsp"); //If he's an admin we show this page.
 			} else {
-				dispatcher = request.getRequestDispatcher("user.jsp");
+				dispatcher = request.getRequestDispatcher("user.jsp"); //Else we show this one.
 			}
 		} else {
-			dispatcher = request.getRequestDispatcher("main.jsp");
+			dispatcher = request.getRequestDispatcher("main.jsp"); //If the user doesn't exists we show the login page again.
 		}
 		dispatcher.forward(request, response);
-		
 	}
 }
