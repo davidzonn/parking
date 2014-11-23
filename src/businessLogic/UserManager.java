@@ -3,7 +3,6 @@ package businessLogic;
 import beans.User;
 import dataAccess.UserDataAccess;;
 public class UserManager {
-	private User user;
 	/**
 	 * 
 	 * @param username
@@ -14,10 +13,15 @@ public class UserManager {
 	}
 	public boolean isValidUser() {
 		return true;
-		//dao.validateUser(user);
 		//return user.isValid();
 	}
-	public boolean isAdmin() {
-		return true;
+	public boolean isValidUser(String username, String password) {
+		UserDataAccess dao = new UserDataAccess();
+		return dao.userExists(username, password);
+		
+	}
+	public boolean isAdmin(String username) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

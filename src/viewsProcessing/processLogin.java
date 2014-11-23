@@ -38,22 +38,16 @@ public class processLogin extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-
-		User user = new User(username, password);
 		UserManager userManager = new UserManager();
-		RequestDispatcher dispatcher;
-		
-		if (userManager.isValidUser()) {
+		RequestDispatcher dispatcher = null;
+		if (userManager.isValidUser(username, password)) {
+			User user = new User(username);
 			request.setAttribute("user", user);
-			if (userManager.isAdmin()) {
-				dispatcher = request.getRequestDispatcher("admin.jsp"); //If he's an admin we show this page.
-			} else {
-				dispatcher = request.getRequestDispatcher("user.jsp"); //Else we show this one.
-			}
-		} else {
-			dispatcher = request.getRequestDispatcher("main.jsp"); //If the user doesn't exists we show the login page again.
+			dispatcher = request.getRequestDispatcher(
+					userManager.isAdmin(username)?"admin.jsp":"user.jsp");
 		}
 		dispatcher.forward(request, response);
 	}
