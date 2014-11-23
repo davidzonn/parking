@@ -9,15 +9,13 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 public class DBConnect {
-	public static final String DBUSERNAME = "root";
-	public static final String DBPASSWORD = "";
-	public static final String DBNAME = "parking";
 	
 	private Connection con;
 	public DBConnect() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + DBNAME, DBUSERNAME, DBPASSWORD);
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"
+					+ DBConfig.DBNAME, DBConfig.DBUSERNAME, DBConfig.DBPASSWORD);
 		} catch (Exception e) {
 			System.out.println("INTERNAL ERROR: " + e.getMessage());
 		}
