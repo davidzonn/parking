@@ -48,6 +48,8 @@ public class processLogin extends HttpServlet {
 			request.setAttribute("user", user);
 			dispatcher = request.getRequestDispatcher(
 					userManager.isAdmin(username)?"admin.jsp":"user.jsp");
+		} else {
+			dispatcher = request.getRequestDispatcher("main.jsp");
 		}
 		dispatcher.forward(request, response);
 	}

@@ -11,10 +11,7 @@ public class UserManager {
 	 */
 	public UserManager() {
 	}
-	public boolean isValidUser() {
-		return true;
-		//return user.isValid();
-	}
+	
 	public boolean isValidUser(String username, String password) {
 		UserDataAccess dao = new UserDataAccess();
 		return dao.userExists(username, password);

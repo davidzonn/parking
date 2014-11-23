@@ -18,8 +18,8 @@ public class UserDataAccess {
 
 	public boolean userExists(String username, String password) {
 		String sql = "SELECT count(*) FROM USER"
-				+ "WHERE user.username = '" + username
-				+ "' AND user.password = '" + password + "'";
+				+ " WHERE username = '" + username
+				+ "' AND password = '" + password + "'";
 		DBConnect db = new DBConnect();
 		int count = -1;
 		ResultSet resultSet = db.executeStatement(sql);
