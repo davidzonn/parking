@@ -5,10 +5,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Reservation Management</title>
 </head>
 <body>
 	<% User user = (User)request.getAttribute("user"); %>
-	HOLA HOLA <%=user.getUsername()%> USER!
+	<div id = "welcome">Welcome <%=user.getUsername()%> !</div>
+	<ol>
+		<li>Reserve spot</li>
+		<li>Transportation</li>
+		<li>Shuttle</li>
+		
+	</ol>
 </body>
 </html>

@@ -7,7 +7,11 @@ import java.util.Collection;
 import beans.User;
 
 public class UserDataAccess {
-
+	DBConnect db;
+	ResultSet result;
+	public UserDataAccess() {
+		db = new DBConnect();
+	}
 	public Collection<String> resultSetToUser (ResultSet rs) throws SQLException {
 		Collection<String> user = new java.util.ArrayList<String>();
 		while (rs.next()) {
@@ -16,19 +20,24 @@ public class UserDataAccess {
 		return user;
 	}
 
-	public boolean userExists(String username, String password) {
-		String sql = "SELECT count(*) FROM USER"
+	public boolean userExists(String username, String password) throws SQLException {
+		String sql = "SELECT count(*)"
+				+ "FROM USER"
 				+ " WHERE username = '" + username
 				+ "' AND password = '" + password + "'";
-		DBConnect db = new DBConnect();
-		int count = -1;
-		ResultSet resultSet = db.executeStatement(sql);
-		try {
-			resultSet.next();
-			count = resultSet.getInt(1);
-		} catch (SQLException e) {
-			System.out.println(e);
-		}
+		result = db.executeStatement(sql);
+		result.next();
+		int count = result.getInt(1);
+		return count == 1;
+	}
+	public boolean isAdmin(String username) throws SQLException {
+		String sql = "SELECT count(*) "
+				+ "FROM USER u "
+				+ "JOIN ADMIN a ON u.ID_USER = a.ID_USER"
+				+ " WHERE username = '" + username + "'";
+		result = db.executeStatement(sql);
+		result.next();
+		int count = result.getInt(1);
 		return count == 1;
 	}
 	

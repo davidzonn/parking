@@ -1,5 +1,7 @@
 package businessLogic;
 
+import java.sql.SQLException;
+
 import beans.User;
 import dataAccess.UserDataAccess;;
 public class UserManager {
@@ -13,12 +15,24 @@ public class UserManager {
 	}
 	
 	public boolean isValidUser(String username, String password) {
+		boolean exists = false;	
 		UserDataAccess dao = new UserDataAccess();
-		return dao.userExists(username, password);
-		
-	}
+		try {
+			exists = dao.userExists(username, password);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return exists;
+	} 
 	public boolean isAdmin(String username) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		boolean  isAdmin = false;
+		UserDataAccess dao = new UserDataAccess();
+		try {
+			isAdmin = dao.isAdmin(username);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return isAdmin;
+	} 
 }
