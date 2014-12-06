@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="beans.User"%>
+<% Object isAdmin = session.getAttribute("isAdmin");
+	User user = (User)session.getAttribute("user");%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,6 +10,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	HOLA ${requestScope.user.username} ADMIN!
+	<% if (isAdmin != null) {%>
+		Hi <%=user.getUsername() %> ADMIN!
+	<%} else { response.sendRedirect("user.jsp"); }%>
 </body>
 </html>

@@ -1,28 +1,23 @@
 package viewsProcessing;
 
-
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import businessLogic.*;
-import beans.*;
 /**
- * Servlet implementation class ServletExample
+ * Servlet implementation class processLogout
  */
-@WebServlet("/processLogin")
-public class ProcessLogin extends HttpServlet {
+@WebServlet("/processLogout")
+public class ProcessLogout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProcessLogin() {
+    public ProcessLogout() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,21 +33,11 @@ public class ProcessLogin extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		UserManager userManager = new UserManager();
-		if (userManager.isValidUser(username, password)) {
-			User user = new User(username);
-			request.getSession().setAttribute("user", user);
-			if (userManager.isAdmin(username)) {
-				request.getSession().setAttribute("isAdmin", true);
-				response.sendRedirect("admin.jsp");				
-			} else {
-				response.sendRedirect("user.jsp");
-			}
-		} else {
-			response.sendRedirect("user.jsp");
-		}
+		// TODO Auto-generated method stub
+		request.getSession().invalidate();
+		String referrer = request.getHeader("referer");
+		System.out.println(referrer);
+		response.sendRedirect(referrer);
 	}
+
 }
