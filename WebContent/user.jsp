@@ -28,7 +28,7 @@
 			<%}%>
 	</header>
 	<section>
-		<form method = "post" action = "processReservation">
+		<form id="reservationForm" method = "post" action = "processReservation">
 			<ol>	
 				<li id = "reserve">
 					<fieldset>
@@ -56,26 +56,27 @@
 						</fieldset>
 						<button id="checkAvailability">Check Availability!</button>
 					</fieldset>
+					<button id = "reserveButton" type="button">Next Step!</button>
 				</li>
-				<li id="transportationRequired">
+				<li id="transportationRequired" hidden>
 					<fieldset>
 						<legend>Transportation Required?</legend>
-						<label for="yes">yes</label>
-						<input type="radio" id="yes" name="transportation"><br/>
-						<label for="no">no</label>
-						<input type="radio" id="no" name="transportation">
+						<label for="yesTransportation">yes</label>
+						<input type="radio" id="yesTransportation" name="transportation" value="yesTransportation"><br/>
+						<label for="noTransportation">no</label>
+						<input type="radio" id="noTransportation" name="transportation" value = "noTransportation">
 					</fieldset>
 				</li>
-				<li id="transportationType">
+				<li id="transportationType" hidden>
 					<fieldset>
 						<legend>Select Transportation Type</legend>
 						<label for="shuttle">Regular Shuttle Service</label>
-						<input type="radio" id="shuttle" name="transportationType" placeholder="For Existing Locations"><br/>
+						<input type="radio" id="regular" name="transportationType" placeholder="For Existing Locations" value="regular"><br/>
 						<label for="onDemand">Shuttle On Demand</label>
-						<input type="radio" id="onDemand" name="transportationType" placeholder="For Custom locations">
+						<input type="radio" id="onDemand" name="transportationType" placeholder="For Custom locations" value="onDemand">
 					</fieldset>
 				</li>
-				<li id="regularShuttle">
+				<li id="regularShuttle" hidden>
 					<fieldset>
 						<legend>Regular Shuttle Service</legend>
 						<fieldset>
@@ -87,9 +88,9 @@
 						</fieldset>
 					</fieldset>
 				</li>
-				<li id = "onDemandShuttle">
+				<li id = "onDemandShuttle" hidden>
 					<fieldset>
-						<legend>On Demand Shuttle</legend>
+						<legend>On Demand Shuttle Service</legend>
 						<fieldset>
 							<legend>Range Selection</legend>
 							<table>
@@ -128,22 +129,50 @@
 					</fieldset>
 				</li>
 			</ol>
+			<!-- jsp:include page="login.jsp" /-->
 			<input type="submit" value = "Make Reservation"/>
 		</form>
-	</section>
-	<!-- script src="scripts/jquery.js"></script-->
-	<script src="ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	</section>	
+	<script src="scripts/jquery.js"></script>
+	<!--  script src="ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 	<script>
-		$(document).ready(function() {
-			
+		$(function() {
+	$("#loginForm").hide();
 			var reserve = $("#reserve");
-			var transportationRequired = $("transportationRequired");
-			var transportationType = $("transportationType");
-			var regularShuttle = $("regularShuttle");
-			var onDemandShuttle = $("onDemandShuttle");
-			
-		})
-		
+			var transportationRequired = $("#transportationRequired");
+			var transportationType = $("#transportationType");
+			var regularShuttle = $("#regularShuttle");
+			var onDemandShuttle = $("#onDemandShuttle");
+			$("#reserveButton").click(function(){
+				transportationRequired.show();
+			});
+			$("#transportationRequired input:radio").click(function() {
+				if ($(this).val() === "yesTransportation") {
+					transportationType.show();
+				} else {
+					transportationType.hide();
+					regularShuttle.hide();
+					onDemandShuttle.hide();
+				}
+			});
+			$("#transportationType input:radio").click(function() {
+				if ($(this).val() === "regular") {
+					regularShuttle.show();
+					onDemandShuttle.hide();
+				} else {
+					onDemandShuttle.show();
+					regularShuttle.hide();
+				}
+			});
+		});
+		$("#reservationForm").submit(function() {
+			<% if (sessionStarted) { %>
+				window.location = "/checkout.jsp";;
+			<% } else { %>
+				alert ("Please log in to continue!");
+				window.location = "/login.jsp";
+			<% } %>
+		});
 	</script>
 </body>
 </html>
