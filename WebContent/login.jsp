@@ -8,7 +8,7 @@
 	<!--link rel="stylesheet" href="styles/forms.css" /-->
 </head>
 <body>
-	<form method = "post" action = "processLogin">
+	<form method = "post" action = "processLogin" id="loginForm" name="loginForm">
 		<fieldset>
 			<legend>
 				Login
