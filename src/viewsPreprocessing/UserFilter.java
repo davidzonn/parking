@@ -15,7 +15,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-import beans.Range;
 import dataAccess.RangeDataAccess;
 import dataAccess.ReservationDataAccess;
 
@@ -30,7 +29,6 @@ public class UserFilter implements Filter {
      */
     public UserFilter() {
         // TODO Auto-generated constructor stub
-    	System.out.println("HOLA!");
     }
 
 	/**
@@ -44,7 +42,7 @@ public class UserFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		List<Range> ranges = getRangeBeans();
+		List<model.Range> ranges = getRangeBeans();
 		// TODO Auto-generated method stub
 		// place your code here
 		ReservationDataAccess dao = new ReservationDataAccess();
@@ -65,15 +63,10 @@ public class UserFilter implements Filter {
 		chain.doFilter(request, response);
 	}
 
-	private List<Range> getRangeBeans() {
-		List<Range> ranges = new ArrayList<Range> ();
+	private List<model.Range> getRangeBeans() {
+		List<model.Range> ranges = new ArrayList<model.Range> ();
 		RangeDataAccess dao = new RangeDataAccess();
-		try {
-			ranges = dao.getRanges();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		ranges = dao.getRanges();
 		return ranges;
 	}
 

@@ -2,7 +2,6 @@ package businessLogic;
 
 import java.sql.SQLException;
 
-import beans.User;
 import dataAccess.UserDataAccess;;
 public class UserManager {
 	/**

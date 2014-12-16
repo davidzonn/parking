@@ -5,8 +5,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import beans.Range;
+//import beans.Range;
 
+/*
 public class RangeDataAccess {
 	public List<Range> getRanges() throws SQLException {
 		List<Range> ranges = new ArrayList<Range>();
@@ -22,6 +23,22 @@ public class RangeDataAccess {
 		}
 		return ranges;
 	}
+}
+*/
 
 
+
+import javax.persistence.Query;
+
+import model.JPADataAccess;
+import model.Range;
+
+public class RangeDataAccess {
+	public List<Range> getRanges() {
+		JPADataAccess jpa = new JPADataAccess();
+		String sql = "SELECT * FROM ranges";
+		Query query = jpa.getQuery(sql);
+		List results = query.getResultList();
+		return results;
+	}
 }

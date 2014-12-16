@@ -1,17 +1,16 @@
-<%@page import="beans.Range"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="beans.User"%>
+<%@ page import="model.User"%>
 <%@ page import="java.util.List" %>
 <%
 	User user = (User)session.getAttribute("user");
 	List<String> carTypes = (List<String>)application.getAttribute("carTypes");
 	List<String> destinations = (List<String>)application.getAttribute("destinations");
 	boolean sessionStarted = (user != null);
-	List<Range> ranges = (List<Range>)application.getAttribute("ranges");
+	List ranges = (List)application.getAttribute("ranges");
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -20,15 +19,15 @@
 <body>
 	<header>
 		<h1>Make a Reservation</h1>
+	</header>
+	<section>
 			<% if (!sessionStarted) { %>
 				<jsp:include page="login.jsp"/>
 			<%} else {%>
 				<div id = "welcomeMessage">Welcome <%=user.getUsername()%>!</div>
 				<form method = "post" action = "processLogout"><button>Logout</button> </form>
 			<%}%>
-	</header>
-	<section>
-		<form id="reservationForm" method = "post" action = "processReservation">
+		<form>
 			<ol>	
 				<li id = "reserve">
 					<fieldset>
@@ -105,14 +104,14 @@
 										<tr>
 											<td>
 												<label for="${range}">
-													${range.distance}
+													${range[1]}
 												</label>
 											</td>
 											<td>
-												<label for="${range}">&euro;${range.price}</label>
+												<label for="${range}">&euro;${range[2]}</label>
 											</td>
 											<td>
-												<input type="radio" name="range" id="${range}" value="${range.name}"><br>
+												<input type="radio" name="range" id="${range}" value="${range[3]}"><br>
 											</td>
 										</tr>
 									</c:forEach>
@@ -137,7 +136,6 @@
 	<!--  script src="ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 	<script>
 		$(function() {
-	$("#loginForm").hide();
 			var reserve = $("#reserve");
 			var transportationRequired = $("#transportationRequired");
 			var transportationType = $("#transportationType");

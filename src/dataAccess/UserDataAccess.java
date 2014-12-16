@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 
-import beans.User;
-
 public class UserDataAccess {
 	DBConnect db;
 	ResultSet result;
@@ -33,8 +31,8 @@ public class UserDataAccess {
 	public boolean isAdmin(String username) throws SQLException {
 		String sql = "SELECT count(*) "
 				+ "FROM USER u "
-				+ "JOIN ADMIN a ON u.ID_USER = a.ID_USER"
-				+ " WHERE username = '" + username + "'";
+				+ " WHERE username = '" + username + "'"
+				+ " AND ACCESS_LEVEL > 1";
 		result = db.executeStatement(sql);
 		result.next();
 		int count = result.getInt(1);

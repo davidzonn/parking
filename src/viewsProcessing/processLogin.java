@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.User;
 import businessLogic.*;
-import beans.*;
 /**
  * Servlet implementation class ServletExample
  */
@@ -43,7 +43,8 @@ public class ProcessLogin extends HttpServlet {
 		String password = request.getParameter("password");
 		UserManager userManager = new UserManager();
 		if (userManager.isValidUser(username, password)) {
-			User user = new User(username);
+			User user = new User();
+			user.setUsername(username);
 			request.getSession().setAttribute("user", user);
 			if (userManager.isAdmin(username)) {
 				request.getSession().setAttribute("isAdmin", true);
