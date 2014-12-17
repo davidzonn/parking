@@ -4,10 +4,8 @@
 <%@ page import="model.User"%>
 <%@ page import="java.util.List" %>
 <%
-	User user = (User)session.getAttribute("user");
 	List<String> carTypes = (List<String>)application.getAttribute("carTypes");
 	List<String> destinations = (List<String>)application.getAttribute("destinations");
-	boolean sessionStarted = (user != null);
 	List ranges = (List)application.getAttribute("ranges");
 %>
 <!DOCTYPE html>
@@ -21,13 +19,14 @@
 		<h1>Make a Reservation</h1>
 	</header>
 	<section>
-			<% if (!sessionStarted) { %>
-				<jsp:include page="login.jsp"/>
-			<%} else {%>
-				<div id = "welcomeMessage">Welcome <%=user.getUsername()%>!</div>
+			<c:if test="${user != null}">
+				<div id = "welcomeMessage">Welcome ${user.username}!</div>
 				<form method = "post" action = "processLogout"><button>Logout</button> </form>
-			<%}%>
-		<form>
+			</c:if>
+			<c:if test="${user == null}">
+				<jsp:include page="login.jsp"/>
+			</c:if>
+		<form id = "reservationForm">
 			<ol>	
 				<li id = "reserve">
 					<fieldset>
@@ -128,8 +127,11 @@
 					</fieldset>
 				</li>
 			</ol>
+			<div id = "endLogin" hidden = "hidden">
+				<jsp:include page="login.jsp"/>
+			</div>
 			<!-- jsp:include page="login.jsp" /-->
-			<input type="submit" value = "Make Reservation"/>
+			<input id = "reservationProceed" type="submit" value = "Make Reservation"/>
 		</form>
 	</section>	
 	<script src="scripts/jquery.js"></script>
@@ -163,13 +165,22 @@
 				}
 			});
 		});
-		$("#reservationForm").submit(function() {
-			<% if (sessionStarted) { %>
-				window.location = "/checkout.jsp";;
-			<% } else { %>
-				alert ("Please log in to continue!");
-				window.location = "/login.jsp";
-			<% } %>
+		$("#reservationProceed").click(function() {
+			var endLogin = $("#endLogin");
+			$.ajax({
+				type: "POST",
+				url: "CheckLogin",
+				async: false,
+				success: function (result) {
+					if (result === "true") {
+						alert("hi!");
+						window.location = "/checkout.jsp";
+					} else {
+						alert("Please log in to continue!");
+						endLogin.show();
+					}
+				}
+			});
 		});
 	</script>
 </body>

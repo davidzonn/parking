@@ -12,15 +12,16 @@ public class UserManagerTest{
 	@Test
 	public void testIsValidUser() {
 		UserManager um = new UserManager();
-		boolean valid;
-		valid = um.isValidUser("pedro", "pedro");
-		assertTrue(valid);
+		boolean isValid;
 		
-		valid = um.isValidUser("rato", "admin");
-		assertTrue(valid);
+		isValid = um.isValidUser("pedro", "pedro");
+		assertTrue(isValid);
 		
-		valid = um.isValidUser("batata123", "whatever!");
-		assertFalse(valid);
+		isValid = um.isValidUser("rato", "admin");
+		assertTrue(isValid);
+		
+		isValid = um.isValidUser("batata123", "whatever!");
+		assertFalse(isValid);
 	}
 
 	@Test
