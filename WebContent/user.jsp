@@ -1,11 +1,12 @@
+<%@page import="java.util.Collection"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="model.User"%>
 <%@ page import="java.util.List" %>
 <%
-	List<String> carTypes = (List<String>)application.getAttribute("carTypes");
-	List<String> destinations = (List<String>)application.getAttribute("destinations");
+	Collection<String> carTypes = (Collection<String>)application.getAttribute("carTypes");
+	Collection<String> destinations = (Collection<String>)application.getAttribute("destinations");
 	List ranges = (List)application.getAttribute("ranges");
 %>
 <!DOCTYPE html>
