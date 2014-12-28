@@ -35,8 +35,7 @@ public class ProcessLogout extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.getSession().invalidate();
-		String referrer = request.getHeader("referer");
-		response.sendRedirect(referrer);
+		response.sendRedirect("/parking");
 	}
 
 }

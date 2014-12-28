@@ -2,7 +2,6 @@ package viewsPreprocessing;
 
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,15 +12,16 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
 
+import model.Destination;
+import model.TypeReservation;
 import dataAccess.RangeDataAccess;
 import dataAccess.ReservationDataAccess;
 
 /**
  * Servlet Filter implementation class UserFilter
  */
-@WebFilter("/user.jsp")
+@WebFilter(urlPatterns = {"/*"})
 public class UserFilter implements Filter {
 
     /**
@@ -43,28 +43,20 @@ public class UserFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		List<model.Range> ranges = getRangeBeans();
-		// TODO Auto-generated method stub
-		// place your code here
 		ReservationDataAccess dao = new ReservationDataAccess();
-		
-		List<String> carTypes = null;
-		List<String> destinations = null;
-		try {
-			carTypes = dao.getReservationTypes();
-			destinations = dao.getDestinations();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		List<TypeReservation> types = dao.getReservationTypes();
+		List<Destination>destinations = dao.getDestinations();
 		request.getServletContext().setAttribute("destinations", destinations);
-		request.getServletContext().setAttribute("carTypes", carTypes);
+		request.getServletContext().setAttribute("carTypes", types);
 		request.getServletContext().setAttribute("ranges", ranges);
 		//HttpServletRequest httpRequest = (HttpServletRequest) request;
 		// pass the request along the filter chain
+		System.out.println(ranges + "HOLA");
 		chain.doFilter(request, response);
 	}
 
 	private List<model.Range> getRangeBeans() {
-		List<model.Range> ranges = new ArrayList<model.Range> ();
+		List<model.Range> ranges;
 		RangeDataAccess dao = new RangeDataAccess();
 		ranges = dao.getRanges();
 		return ranges;

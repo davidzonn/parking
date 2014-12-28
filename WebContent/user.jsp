@@ -3,11 +3,9 @@
     pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="model.User"%>
-<%@ page import="java.util.List" %>
 <%
-	Collection<String> carTypes = (Collection<String>)application.getAttribute("carTypes");
-	Collection<String> destinations = (Collection<String>)application.getAttribute("destinations");
-	List ranges = (List)application.getAttribute("ranges");
+	Collection carTypes = (Collection)application.getAttribute("carTypes");
+	Collection destinations = (Collection)application.getAttribute("destinations");
 %>
 <!DOCTYPE html>
 <html>
@@ -22,7 +20,7 @@
 	<section>
 			<c:if test="${user != null}">
 				<div id = "welcomeMessage">Welcome ${user.username}!</div>
-				<form method = "post" action = "processLogout"><button>Logout</button> </form>
+				<jsp:include page="logout.jsp"/>
 			</c:if>
 			<c:if test="${user == null}">
 				<jsp:include page="login.jsp"/>
@@ -33,8 +31,8 @@
 					<fieldset>
 						<legend>Reservation Type</legend>
 						<c:forEach items="${carTypes}" var="type">
-							<label for="${type}" value="${type}">${type}</label>
-							<input type="radio" name="reservationType" value="${type}" id="${type}"><br>
+							<label for="${type.reservationType}" value="${type.reservationType}">${type.reservationType}</label>
+							<input type="radio" name="reservationType" value="${type.reservationType}" id="${type.reservationType}"><br>
 						</c:forEach>
 					</fieldset>
 					<fieldset>
@@ -88,44 +86,7 @@
 					</fieldset>
 				</li>
 				<li id = "onDemandShuttle" hidden>
-					<fieldset>
-						<legend>On Demand Shuttle Service</legend>
-						<fieldset>
-							<legend>Range Selection</legend>
-							<table>
-								<thead>
-									<tr>
-										<th> Distance </th>
-										<th> Price </th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${ranges}" var="range">
-										<tr>
-											<td>
-												<label for="${range}">
-													${range[1]}
-												</label>
-											</td>
-											<td>
-												<label for="${range}">&euro;${range[2]}</label>
-											</td>
-											<td>
-												<input type="radio" name="range" id="${range}" value="${range[3]}"><br>
-											</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</fieldset>
-						<fieldset>
-							<legend>Select Time</legend>
-								<label for="onDemandDate">Date</label>
-								<input type="date" name="onDemandDate" id="onDemandDate"><br/>
-								<label for="onDemandTime">Time</label>
-								<input type="time" name="onDemandTime" id="onDemandTime">
-						</fieldset>
-					</fieldset>
+					<jsp:include page="WEB-INF/jspf/onDemand.jsp"></jsp:include>
 				</li>
 			</ol>
 			<div id = "endLogin" hidden = "hidden">

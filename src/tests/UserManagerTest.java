@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-import businessLogic.UserManager;
+import services.UserManager;
 
 public class UserManagerTest{
 

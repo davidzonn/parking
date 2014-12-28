@@ -1,4 +1,4 @@
-package businessLogic;
+package services;
 
 import java.sql.SQLException;
 
@@ -16,22 +16,13 @@ public class UserManager {
 	public boolean isValidUser(String username, String password) {
 		boolean exists = false;	
 		UserDataAccess dao = new UserDataAccess();
-		try {
-			exists = dao.userExists(username, password);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		exists = dao.userExists(username, password);
 		return exists;
 	} 
 	public boolean isAdmin(String username) {
 		boolean  isAdmin = false;
 		UserDataAccess dao = new UserDataAccess();
-		try {
-			isAdmin = dao.isAdmin(username);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		isAdmin = dao.isAdmin(username);
 		return isAdmin;
 	} 
 }

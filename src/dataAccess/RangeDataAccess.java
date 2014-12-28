@@ -1,12 +1,13 @@
 package dataAccess;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-//import beans.Range;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
+import model.Range;
+//import beans.Range;
 /*
 public class RangeDataAccess {
 	public List<Range> getRanges() throws SQLException {
@@ -26,19 +27,12 @@ public class RangeDataAccess {
 }
 */
 
-
-
-import javax.persistence.Query;
-
-import model.JPADataAccess;
-import model.Range;
-
 public class RangeDataAccess {
 	public List<Range> getRanges() {
-		JPADataAccess jpa = new JPADataAccess();
-		String sql = "SELECT * FROM ranges";
-		Query query = jpa.getQuery(sql);
-		List results = query.getResultList();
+		EntityManager em = model.DBConnect.getEntityManager();
+		String jpql = "SELECT r FROM Range AS r";
+		TypedQuery query = em.createQuery(jpql, Range.class); 
+		List<Range> results = query.getResultList();
 		return results;
 	}
 }
