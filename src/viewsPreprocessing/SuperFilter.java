@@ -1,6 +1,8 @@
 package viewsPreprocessing;
 
 import java.io.IOException;
+import java.util.Collection;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -8,11 +10,14 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
 
+import dataAccess.ParkingDataAccess;
+import model.Parking;
 /**
  * Servlet Filter implementation class SuperFilter
  */
-@WebFilter("/super")
+@WebFilter(urlPatterns = "/super.jsp")
 public class SuperFilter implements Filter {
 
     /**
@@ -32,12 +37,14 @@ public class SuperFilter implements Filter {
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		// place your code here
-
-		// pass the request along the filter chain
+	public void doFilter(ServletRequest req, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		System.out.println("Excecuting super filter.");
+		HttpServletRequest request = (HttpServletRequest)req;
+		ParkingDataAccess dao = new ParkingDataAccess();
+		Collection<Parking> parkings = dao.getParkings();
+		request.getSession().setAttribute("parkings", parkings);
 		chain.doFilter(request, response);
+		
 	}
 
 	/**

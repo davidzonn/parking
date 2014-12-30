@@ -17,10 +17,10 @@ public class Operation implements Serializable {
 	@Column(name="ID_OPERATION")
 	private int idOperation;
 
-	//bi-directional many-to-one association to User
+	//bi-directional many-to-one association to OnDemand
 	@ManyToOne
-	@JoinColumn(name="ID_USER")
-	private User user;
+	@JoinColumn(name="ID_ON_DEMAND")
+	private OnDemand onDemand;
 
 	//bi-directional many-to-one association to RegularReservation
 	@ManyToOne
@@ -32,10 +32,10 @@ public class Operation implements Serializable {
 	@JoinColumn(name="ID_SHUTTLE_SERVICE")
 	private ShuttleService shuttleService;
 
-	//bi-directional many-to-one association to OnDemand
+	//bi-directional many-to-one association to User
 	@ManyToOne
-	@JoinColumn(name="ID_ON_DEMAND")
-	private OnDemand onDemand;
+	@JoinColumn(name="ID_USER")
+	private User user;
 
 	public Operation() {
 	}
@@ -48,12 +48,12 @@ public class Operation implements Serializable {
 		this.idOperation = idOperation;
 	}
 
-	public User getUser() {
-		return this.user;
+	public OnDemand getOnDemand() {
+		return this.onDemand;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setOnDemand(OnDemand onDemand) {
+		this.onDemand = onDemand;
 	}
 
 	public RegularReservation getRegularReservation() {
@@ -72,12 +72,12 @@ public class Operation implements Serializable {
 		this.shuttleService = shuttleService;
 	}
 
-	public OnDemand getOnDemand() {
-		return this.onDemand;
+	public User getUser() {
+		return this.user;
 	}
 
-	public void setOnDemand(OnDemand onDemand) {
-		this.onDemand = onDemand;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

@@ -1,7 +1,9 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -22,7 +24,7 @@ public class Parking implements Serializable {
 	private String parkingName;
 
 	//bi-directional many-to-one association to ParkingPlace
-	@OneToMany(mappedBy="parking")
+	@OneToMany(mappedBy="parking", cascade=CascadeType.PERSIST)
 	private List<ParkingPlace> parkingPlaces;
 
 	public Parking() {

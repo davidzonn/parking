@@ -42,6 +42,7 @@ public class UserFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		System.out.println("Processing User Filter");
 		List<model.Range> ranges = getRangeBeans();
 		ReservationDataAccess dao = new ReservationDataAccess();
 		List<TypeReservation> types = dao.getReservationTypes();
@@ -51,7 +52,6 @@ public class UserFilter implements Filter {
 		request.getServletContext().setAttribute("ranges", ranges);
 		//HttpServletRequest httpRequest = (HttpServletRequest) request;
 		// pass the request along the filter chain
-		System.out.println(ranges + "HOLA");
 		chain.doFilter(request, response);
 	}
 

@@ -16,20 +16,18 @@
 		<section>
 			<form id="newParking">
 				<label for = "parkingName">Parking Name:</label>
-				<input type="text" id ="name"> 
+				<input type="text" id ="name" required="required" > 
 				<!--
 				<label for = "percentageTrucks">Percentage Trucks:</label>
 				<input type="number" min="0" max="100" id ="percentageTrucks"> 
 				-->
 				<label for = "totalSpaces">Total Number of spaces:</label>
-				<input type="number" id ="totalSpaces"> 
+				<input type="number" id ="totalSpaces" required="required" > 
 				<button value = "New Parking" id = "newParkingButton">New Parking</button>
 			</form>
 			<select>
 				<c:forEach items = "parkings" var="parking">
-					<option value = "${park.idParking}" id="${park.idParking}">
-						P "${park.idParking}": "${park.parkingName}"
-					</option>
+					"${parking}"
 				</c:forEach>
 			</select>
 			
@@ -58,6 +56,8 @@ $( document ).ready(function() {
 	};
 	
 	var updateParkingViews = function(returnedData) {
+		alert(returnedData);
+		var data = JSON.parse(returnedData);
 		console.log(returnedData);
 	}
 });

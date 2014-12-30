@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -18,27 +19,29 @@ public class ParkingPlace implements Serializable {
 	@Column(name="ID_PARKING_PLACE")
 	private int idParkingPlace;
 
-	private int time;
-
-	//bi-directional many-to-one association to Status
+	//bi-directional many-to-one association to DistanceEntrance
 	@ManyToOne
-	@JoinColumn(name="ID_STATUS")
-	private Status status;
+	@JoinColumn(name="ID_DISTANCE_ENTRANCE")
+	private DistanceEntrance distanceEntrance;
 
 	//bi-directional many-to-one association to Parking
 	@ManyToOne
 	@JoinColumn(name="ID_PARKING")
 	private Parking parking;
 
-	//bi-directional many-to-one association to DistanceEntrance
+	//bi-directional many-to-one association to Status
 	@ManyToOne
-	@JoinColumn(name="ID_DISTANCE_ENTRANCE")
-	private DistanceEntrance distanceEntrance;
+	@JoinColumn(name="ID_STATUS")
+	private Status status;
+
+	//bi-directional many-to-one association to TypeReservation
+	@ManyToOne
+	@JoinColumn(name="ID_TYPE_RESERVATION")
+	private TypeReservation typeReservation;
 
 	//bi-directional many-to-one association to RegularReservation
-	@ManyToOne
-	@JoinColumn(name="ID_REGULAR_RESERVATION")
-	private RegularReservation regularReservation;
+	@OneToMany(mappedBy="parkingPlace")
+	private List<RegularReservation> regularReservations;
 
 	public ParkingPlace() {
 	}
@@ -51,20 +54,12 @@ public class ParkingPlace implements Serializable {
 		this.idParkingPlace = idParkingPlace;
 	}
 
-	public int getTime() {
-		return this.time;
+	public DistanceEntrance getDistanceEntrance() {
+		return this.distanceEntrance;
 	}
 
-	public void setTime(int time) {
-		this.time = time;
-	}
-
-	public Status getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setDistanceEntrance(DistanceEntrance distanceEntrance) {
+		this.distanceEntrance = distanceEntrance;
 	}
 
 	public Parking getParking() {
@@ -75,20 +70,41 @@ public class ParkingPlace implements Serializable {
 		this.parking = parking;
 	}
 
-	public DistanceEntrance getDistanceEntrance() {
-		return this.distanceEntrance;
+	public Status getStatus() {
+		return this.status;
 	}
 
-	public void setDistanceEntrance(DistanceEntrance distanceEntrance) {
-		this.distanceEntrance = distanceEntrance;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
-	public RegularReservation getRegularReservation() {
-		return this.regularReservation;
+	public TypeReservation getTypeReservation() {
+		return this.typeReservation;
 	}
 
-	public void setRegularReservation(RegularReservation regularReservation) {
-		this.regularReservation = regularReservation;
+	public void setTypeReservation(TypeReservation typeReservation) {
+		this.typeReservation = typeReservation;
+	}
+
+	public List<RegularReservation> getRegularReservations() {
+		return this.regularReservations;
+	}
+
+	public void setRegularReservations(List<RegularReservation> regularReservations) {
+		this.regularReservations = regularReservations;
+	}
+
+	public RegularReservation addRegularReservation(RegularReservation regularReservation) {
+		getRegularReservations().add(regularReservation);
+		regularReservation.setParkingPlace(this);
+
+		return regularReservation;
+	}
+
+	public RegularReservation removeRegularReservation(RegularReservation regularReservation) {
+		getRegularReservations().remove(regularReservation);
+		regularReservation.setParkingPlace(null);
+		return regularReservation;
 	}
 
 }

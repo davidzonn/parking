@@ -31,13 +31,9 @@ public class RegularReservation implements Serializable {
 	private List<Operation> operations;
 
 	//bi-directional many-to-one association to ParkingPlace
-	@OneToMany(mappedBy="regularReservation")
-	private List<ParkingPlace> parkingPlaces;
-
-	//bi-directional many-to-one association to TypeReservation
 	@ManyToOne
-	@JoinColumn(name="ID_TYPE_RESERVATION")
-	private TypeReservation typeReservation;
+	@JoinColumn(name="ID_PARKING_PLACE")
+	private ParkingPlace parkingPlace;
 
 	public RegularReservation() {
 	}
@@ -96,34 +92,12 @@ public class RegularReservation implements Serializable {
 		return operation;
 	}
 
-	public List<ParkingPlace> getParkingPlaces() {
-		return this.parkingPlaces;
+	public ParkingPlace getParkingPlace() {
+		return this.parkingPlace;
 	}
 
-	public void setParkingPlaces(List<ParkingPlace> parkingPlaces) {
-		this.parkingPlaces = parkingPlaces;
-	}
-
-	public ParkingPlace addParkingPlace(ParkingPlace parkingPlace) {
-		getParkingPlaces().add(parkingPlace);
-		parkingPlace.setRegularReservation(this);
-
-		return parkingPlace;
-	}
-
-	public ParkingPlace removeParkingPlace(ParkingPlace parkingPlace) {
-		getParkingPlaces().remove(parkingPlace);
-		parkingPlace.setRegularReservation(null);
-
-		return parkingPlace;
-	}
-
-	public TypeReservation getTypeReservation() {
-		return this.typeReservation;
-	}
-
-	public void setTypeReservation(TypeReservation typeReservation) {
-		this.typeReservation = typeReservation;
+	public void setParkingPlace(ParkingPlace parkingPlace) {
+		this.parkingPlace = parkingPlace;
 	}
 
 }
