@@ -9,6 +9,7 @@
 </head>
 <body>
 	<c:if test="${user.accessLevel >= 2}">
+	
 		<jsp:include page="WEB-INF/jspf/parkingStatus.jsp"></jsp:include>
 		HI!!!
 		<jsp:include page="logout.jsp"/>

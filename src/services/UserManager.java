@@ -18,7 +18,7 @@ public class UserManager {
 		UserDataAccess dao = new UserDataAccess();
 		exists = dao.userExists(username, password);
 		return exists;
-	} 
+	}
 	public boolean isAdmin(String username) {
 		boolean  isAdmin = false;
 		UserDataAccess dao = new UserDataAccess();

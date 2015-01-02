@@ -8,19 +8,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dataAccess.UserDataAccess;
+import dataAccess.ParkingDataAccess;
 
 /**
- * Servlet implementation class CheckLogin
+ * Servlet implementation class AssignAdmin
  */
-@WebServlet("/CheckLogin")
-public class CheckLogin extends HttpServlet {
+@WebServlet("/AssignAdmin")
+public class AssignAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CheckLogin() {
+    public AssignAdmin() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,9 +36,10 @@ public class CheckLogin extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Object a = request.getSession().getAttribute("user");
-		String ans = Boolean.toString(a != null);
-		response.getWriter().write(ans);
+		int parkingID = Integer.parseInt(request.getParameter("parkingID"));
+		String adminName = request.getParameter("adminName");
+		ParkingDataAccess dao = new ParkingDataAccess();
+		dao.assignAdmin(parkingID, adminName);
 	}
 
 }

@@ -7,13 +7,12 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import org.json.simple.JSONObject;
-
 import model.DistanceEntrance;
 import model.Parking;
 import model.ParkingPlace;
 import model.Status;
 import model.TypeReservation;
+import model.User;
 
 public class ParkingDataAccess {
 	EntityManager em = dataAccess.DBConnect.getEntityManager();
@@ -66,5 +65,14 @@ public class ParkingDataAccess {
 			place.setParkingPlaceNumber(parkingPlaceNumber++);
 			parking.addParkingPlace(place);
 		}
+	}
+	public void assignAdmin(int parkingID, String adminName) {
+		Parking p = em.find(Parking.class, parkingID);
+		UserDataAccess daoUser = new UserDataAccess();
+		User u = daoUser.findUserByName(adminName);
+		p.setUser(u);
+		em.getTransaction().begin();
+		em.persist(p);
+		em.getTransaction().commit();
 	}
 }

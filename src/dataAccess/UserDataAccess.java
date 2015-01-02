@@ -59,4 +59,26 @@ public class UserDataAccess {
 		List<Parking> results = query.getResultList();
 		return results;
 	}
+	public String getAdminName(int idParking) {
+		String ans = "";
+		Parking parking = em.find(Parking.class, idParking);
+		User user = parking.getUser();
+		if (user != null) {
+			ans = user.getUsername();
+		}
+		return ans;
+	}
+	public List<String> getAllAdminsNames() {
+		String sql = "SELECT a.username FROM USER a WHERE a.ACCESS_LEVEL = 2";
+		Query query = DBConnect.getQuery(sql);
+		List<String> results = query.getResultList();
+		return results;
+	}
+	public User findUserByName(String adminName) {
+		String jpql = "SELECT u FROM User AS u WHERE u.username = :usr";
+		TypedQuery<User> query = em.createQuery(jpql, User.class);
+		query = query.setParameter("usr", adminName);
+		List<User> users = query.getResultList();
+		return users.isEmpty()? null: users.get(0);
+	}
 }
