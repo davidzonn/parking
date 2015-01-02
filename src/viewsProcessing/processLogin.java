@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dataAccess.DBConnect;
 import dataAccess.UserDataAccess;
 import services.*;
-import model.DBConnect;
 import model.User;
 /**
  * Servlet implementation class ServletExample
@@ -50,7 +50,7 @@ public class ProcessLogin extends HttpServlet {
 		if (user != null) {
 			request.getSession().setAttribute("user", user);
 			if (user.getAccessLevel() == 2) {
-				path += "/admin.jsp";				
+				path += "/admin.jsp";
 			} else if (user.getAccessLevel() == 3) {
 				path += "/super.jsp";
 			}

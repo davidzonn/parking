@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import org.json.simple.JSONObject;
+
 import model.DistanceEntrance;
 import model.Parking;
 import model.ParkingPlace;
@@ -14,10 +16,11 @@ import model.Status;
 import model.TypeReservation;
 
 public class ParkingDataAccess {
-	EntityManager em = model.DBConnect.getEntityManager();
+	EntityManager em = dataAccess.DBConnect.getEntityManager();
+	int parkingPlaceNumber;
 	public Collection<Parking> getParkings() {
 		String jpql = "SELECT p FROM Parking AS p";
-		TypedQuery query = em.createQuery(jpql, Parking.class); 
+		TypedQuery<Parking> query = em.createQuery(jpql, Parking.class); 
 		List<Parking> results = query.getResultList();
 		return results;
 	}
@@ -28,6 +31,8 @@ public class ParkingDataAccess {
 	 * @return The Newly created parking.
 	 */
 	public Parking createNewParking(int numVehicles, String parkingName) {
+		parkingPlaceNumber = 1;
+		em.getTransaction().begin();
 		Parking parking = new Parking();
 		parking.setParkingName(parkingName);
 		int numTrucks = (int) (numVehicles * 0.1);
@@ -35,23 +40,19 @@ public class ParkingDataAccess {
 		int numRegular = numVehicles - numTrucks - numVIP;
 		List<ParkingPlace> parkingPlaces = new ArrayList<ParkingPlace>();
 		parking.setParkingPlaces(parkingPlaces);
-		add(parkingPlaces, "Car", numRegular);
-		add(parkingPlaces, "Truck", numTrucks);
-		add(parkingPlaces, "VIP", numVIP);
-		saveToDB(parking);	
+		add(parking, parkingPlaces, "Car", numRegular);
+		add(parking, parkingPlaces, "Truck", numTrucks);
+		add(parking, parkingPlaces, "VIP", numVIP);
+		em.persist(parking);
+		em.flush();
+		em.getTransaction().commit();
+//		saveToDB(parking);
+		System.out.println("commited");
 		return parking;
 	}
-	private void saveToDB(Parking parking) {
-	    em.getTransaction().begin();
-	    if (!em.contains(parking)) {
-	    	em.persist(parking);
-	        //em.flush();
-	    }
-	    em.getTransaction().commit();
-	}
-	private void add(List<ParkingPlace> parkingPlaces, String statusName, int n) {
+	private void add(Parking parking, List<ParkingPlace> parkingPlaces, String statusName, int n) {
 		StatusDataAccess dao = new StatusDataAccess();
-		Status status = dao.findStatusByName("'Empty'");
+		Status status = dao.findStatusByName("Empty");
 		DistanceEntranceDataAccess daoDE = new DistanceEntranceDataAccess();
 		DistanceEntrance de = daoDE.findDistanceEntranceByName("Average");
 		TypeReservationDataAccess typeDAO = new TypeReservationDataAccess();
@@ -61,8 +62,9 @@ public class ParkingDataAccess {
 			place.setStatus(status);
 			place.setDistanceEntrance(de);
 			place.setTypeReservation(type);
-			parkingPlaces.add(place);
+			place.setParking(parking);
+			place.setParkingPlaceNumber(parkingPlaceNumber++);
+			parking.addParkingPlace(place);
 		}
 	}
-
 }

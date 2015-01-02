@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 
+import javax.annotation.Generated;
 import javax.persistence.*;
 
 import java.util.List;
@@ -17,14 +18,19 @@ public class Parking implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	@Column(name="ID_PARKING")
 	private int idParking;
+	
+	@OneToOne
+	@JoinColumn(name="ID_USER")
+	private User user;
 
 	@Column(name="PARKING_NAME")
 	private String parkingName;
 
 	//bi-directional many-to-one association to ParkingPlace
-	@OneToMany(mappedBy="parking", cascade=CascadeType.PERSIST)
+	@OneToMany(mappedBy="parking", cascade=CascadeType.ALL)
 	private List<ParkingPlace> parkingPlaces;
 
 	public Parking() {
@@ -36,6 +42,14 @@ public class Parking implements Serializable {
 
 	public void setIdParking(int idParking) {
 		this.idParking = idParking;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getParkingName() {

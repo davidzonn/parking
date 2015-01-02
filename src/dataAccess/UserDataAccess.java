@@ -1,16 +1,18 @@
 package dataAccess;
 
 import java.sql.ResultSet;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import model.DBConnect;
+import model.Parking;
 import model.User;
 
 public class UserDataAccess {
+	EntityManager em = DBConnect.getEntityManager();
 	ResultSet result;
 	DBConnect dao;
 	public UserDataAccess() {
@@ -46,10 +48,15 @@ public class UserDataAccess {
 		return result == 1;	}
 	public User getUser(String username, String p) {
 		String jpql = "SELECT u FROM User AS u WHERE u.username = :usr AND u.password = :pwd";
-		EntityManager em = DBConnect.getEntityManager();
 		TypedQuery<User> query = em.createQuery(jpql, User.class);
 		query = query.setParameter("usr", username).setParameter("pwd", p);
 		List<User> users = query.getResultList();
 		return users.isEmpty()? null: users.get(0);
+	}
+	public Collection<Parking> getAdminParkings(User user) {
+		String jpql = "SELECT p FROM Parking AS p WHERE p.user = :user";
+		TypedQuery<Parking> query = em.createQuery(jpql, Parking.class).setParameter("user", user); 
+		List<Parking> results = query.getResultList();
+		return results;
 	}
 }

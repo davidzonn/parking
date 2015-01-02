@@ -29,7 +29,7 @@ public class RangeDataAccess {
 
 public class RangeDataAccess {
 	public List<Range> getRanges() {
-		EntityManager em = model.DBConnect.getEntityManager();
+		EntityManager em = dataAccess.DBConnect.getEntityManager();
 		String jpql = "SELECT r FROM Range AS r";
 		TypedQuery query = em.createQuery(jpql, Range.class); 
 		List<Range> results = query.getResultList();

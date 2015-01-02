@@ -1,4 +1,4 @@
-package model;
+package dataAccess;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

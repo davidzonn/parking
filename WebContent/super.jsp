@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="model.User"%>
-<%@page import="java.util.Collection"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<% User user = (User)session.getAttribute("user");%>
-<% Collection parkings = (Collection)session.getAttribute("parkings"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +11,7 @@
 	<c:if test="${user.accessLevel == 3}">
 		<section>
 			<form id="newParking">
+				
 				<label for = "parkingName">Parking Name:</label>
 				<input type="text" id ="name" required="required" > 
 				<!--
@@ -25,13 +22,16 @@
 				<input type="number" id ="totalSpaces" required="required" > 
 				<button value = "New Parking" id = "newParkingButton">New Parking</button>
 			</form>
-			<select>
-				<c:forEach items = "parkings" var="parking">
-					"${parking}"
+		</section>
+		<section>
+			<select id = "parkings">
+				<c:forEach items = "${parkings}" var="parking">
+					<option value = ${parking.idParking}>${parking.parkingName}</option>
 				</c:forEach>
 			</select>
-			
-			Enter Parking
+			<button>			
+				Enter Parking
+			</button>
 		</section>
 		<section>
 			<header>Admin Managment</header>	
@@ -42,6 +42,9 @@
 	</c:if>
 	<c:if test="${user.accessLevel < 3}">
 		<h1>NOT ALLOWED</h1>
+	</c:if>
+	<c:if test="${empty user}">
+		<jsp:include page="login.jsp"/>
 	</c:if>
 <script src="scripts/jquery.js"></script>
 <script type="text/javascript">
@@ -56,10 +59,11 @@ $( document ).ready(function() {
 	};
 	
 	var updateParkingViews = function(returnedData) {
-		alert(returnedData);
-		var data = JSON.parse(returnedData);
-		console.log(returnedData);
-	}
+		$("#parkings").append($('<option/>', { 
+	        value: returnedData.id,
+	        text : returnedData.name 
+	    }));
+	};
 });
 </script>
 </body>

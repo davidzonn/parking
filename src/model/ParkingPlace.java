@@ -1,7 +1,9 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -16,8 +18,20 @@ public class ParkingPlace implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	@Column(name="ID_PARKING_PLACE")
 	private int idParkingPlace;
+	
+	@Column(name="PARKING_PLACE_NUMBER")
+	private int parkingPlaceNumber;
+	
+	public int getParkingPlaceNumber() {
+		return parkingPlaceNumber;
+	}
+
+	public void setParkingPlaceNumber(int parkingPlaceNumber) {
+		this.parkingPlaceNumber = parkingPlaceNumber;
+	}
 
 	//bi-directional many-to-one association to DistanceEntrance
 	@ManyToOne
@@ -25,7 +39,7 @@ public class ParkingPlace implements Serializable {
 	private DistanceEntrance distanceEntrance;
 
 	//bi-directional many-to-one association to Parking
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="ID_PARKING")
 	private Parking parking;
 

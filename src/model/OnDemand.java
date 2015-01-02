@@ -1,7 +1,9 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class OnDemand implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	@Column(name="ID_ON_DEMAND")
 	private int idOnDemand;
 

@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
-import model.DBConnect;
 import model.Destination;
 import model.Parking;
 import model.Range;

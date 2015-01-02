@@ -9,9 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import model.Parking;
+
+import org.json.simple.JSONObject;
+
 import dataAccess.ParkingDataAccess;
 
 /**
@@ -43,14 +44,21 @@ public class NewParking extends HttpServlet {
 		int numVehicles = Integer.parseInt(request.getParameter("numVehicles"));
 		String parkingName = request.getParameter("parkingName");
 		ParkingDataAccess dao = new ParkingDataAccess();
-		Parking p = dao.createNewParking(numVehicles, parkingName);
+		Parking parking = dao.createNewParking(numVehicles, parkingName);
 		response.setContentType("text/json"); //we'll return a parking object in JSON format.
-		Gson gson = new Gson();
-		String json = gson.toJson(p);
+        String json = toJson(parking);
+        //System.out.println(json);
 		PrintWriter out = response.getWriter();
 		out.print(json);
 		out.flush();
 		out.close();
 	}
 
+	private String toJson(Parking parking) {
+		JSONObject obj = new JSONObject();
+		System.out.println(parking.getIdParking());
+		obj.put("id", parking.getIdParking());
+		obj.put("name", parking.getParkingName());
+		return obj.toJSONString();
+	}
 }

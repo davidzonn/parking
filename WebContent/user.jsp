@@ -1,12 +1,6 @@
-<%@page import="java.util.Collection"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="model.User"%>
-<%
-	Collection carTypes = (Collection)application.getAttribute("carTypes");
-	Collection destinations = (Collection)application.getAttribute("destinations");
-%>
 <!DOCTYPE html>
 <html>
 <head>
