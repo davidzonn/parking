@@ -1,4 +1,4 @@
-<form method = "post" action = "processLogin" id="loginForm" name="loginForm">
+<form method = "post" action = "processLogin">
 	<fieldset>
 		<legend>
 			Login

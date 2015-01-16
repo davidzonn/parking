@@ -21,14 +21,14 @@
 					<tr>
 					<td>
 						<label for="${range}">
-							${range.rangeName}
+							${range.rangeKm} Km.
 						</label>
 					</td>
 					<td>
 						<label for="${range}">&euro;${range.rangePrice}</label>
 					</td>
 					<td>
-						<input type="radio" name="range" id="${range}" value="${range.idRange}"><br>
+						<input type="radio" name="range" id="${range}" value="${range.rangeKm}"><br>
 						</td>
 					</tr>
 				</c:forEach>
@@ -38,8 +38,8 @@
 	<fieldset>
 		<legend>Select Time</legend>
 			<label for="onDemandDate">Date</label>
-			<input type="date" name="onDemandDate" id="onDemandDate"><br/>
+			<input type="date" name="onDemandDate" id="onDemandDate" value = "${today}"><br/>
 			<label for="onDemandTime">Time</label>
-			<input type="time" name="onDemandTime" id="onDemandTime">
+			<input type="time" name="onDemandTime" id="onDemandTime" value = "${currentHour}">
 	</fieldset>
 </fieldset>
