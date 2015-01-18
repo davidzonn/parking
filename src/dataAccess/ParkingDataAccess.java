@@ -45,6 +45,7 @@ public class ParkingDataAccess {
 		em.persist(parking);
 		em.flush();
 		em.getTransaction().commit();
+		em.close();
 //		saveToDB(parking);
 		System.out.println("commited");
 		return parking;
@@ -74,5 +75,27 @@ public class ParkingDataAccess {
 		em.getTransaction().begin();
 		em.persist(p);
 		em.getTransaction().commit();
+		em.close();
+	}
+	public Parking findParkingByName(String parkingName) {
+		String jpql = "SELECT p FROM Parking AS p WHERE p.parkingName = :pName";
+		TypedQuery<Parking> query = em.createQuery(jpql, Parking.class);
+		query = query.setParameter("pName", parkingName);
+		List<Parking> parkings = query.getResultList();
+		return parkings.isEmpty()? null: parkings.get(0);
+	}
+	/**
+	 * gets the first free place from the Database for a given parking and a given reservation type.
+	 * @param parking
+	 * @param reservationType
+	 * @return
+	 */
+	public ParkingPlace getPlace(Parking parking, String reservationType) {
+		String jpql = "SELECT place FROM ParkingPlace As place WHERE place.typeReservation.reservationType = :type AND place.parking = :parking AND place.status.statusName = :placeName";
+		TypedQuery<ParkingPlace> query = em.createQuery(jpql, ParkingPlace.class);
+		
+		query = (query.setParameter("parking", parking).setParameter("type", reservationType).setParameter("placeName", "Empty"));
+		List<ParkingPlace> places = query.getResultList();
+		return places.get(0);
 	}
 }

@@ -2,6 +2,8 @@ package dataAccess;
 
 import java.sql.ResultSet;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,6 +11,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import model.Parking;
+import model.ParkingPlace;
 import model.User;
 
 public class UserDataAccess {
@@ -57,8 +60,26 @@ public class UserDataAccess {
 		String jpql = "SELECT p FROM Parking AS p WHERE p.user = :user";
 		TypedQuery<Parking> query = em.createQuery(jpql, Parking.class).setParameter("user", user); 
 		List<Parking> results = query.getResultList();
+		//sort(results);
 		return results;
 	}
+	/*
+	private void sort(List<Parking> parkings) {
+		Comparator<ParkingPlace> comparator = new Comparator<ParkingPlace>() {
+
+			@Override
+			public int compare(ParkingPlace p1, ParkingPlace p2) {
+				return (p1.getParkingPlaceNumber() > p2.getParkingPlaceNumber()? 1 : -1);
+			}
+			
+		};
+		for (Parking parking: parkings) {
+			List<ParkingPlace> places = parking.getParkingPlaces();
+			Collections.sort(places, comparator);
+			parking.setParkingPlaces(places);
+		}
+	}
+	*/
 	public String getAdminName(int idParking) {
 		String ans = "";
 		Parking parking = em.find(Parking.class, idParking);

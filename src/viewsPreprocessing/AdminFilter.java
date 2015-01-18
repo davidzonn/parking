@@ -41,7 +41,7 @@ public class AdminFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest)req;
 		User user = (User) request.getSession().getAttribute("user");
-		System.out.println("Excecuting admin filter.");
+		//System.out.println("Excecuting admin filter.");
 		UserDataAccess dao = new UserDataAccess();
 		Collection<Parking> parkings = dao.getAdminParkings(user);
 		System.out.println(parkings);

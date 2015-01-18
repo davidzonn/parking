@@ -25,7 +25,7 @@ public class Operation implements Serializable {
 	private OnDemand onDemand;
 
 	//bi-directional many-to-one association to RegularReservation
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="ID_REGULAR_RESERVATION")
 	private RegularReservation regularReservation;
 
