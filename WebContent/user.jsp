@@ -27,7 +27,7 @@
 						<legend>Parking Selection</legend>
 						<select  name = "parking">
 							<c:forEach items="${parkings}" var="parking">
-								<option value=${parking.parkingName }>${parking.parkingName }</option>
+								<option value="${parking.parkingName }">${parking.parkingName }</option>
 							</c:forEach>
 						</select>
 					</fieldset>

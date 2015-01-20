@@ -6,7 +6,7 @@
 	<h1>Parking ${parkingAdmin.parkingName}.</h1>
  	<table>
  		<thead>
- 			<tr><th>&#35;</th><th>Status</th><th>Type</th><th>Client</th></tr>
+ 			<tr><th>&#35;</th><th>Status</th><th>Type</th><%/* <th>Client</th>*/%></tr>
  		</thead>
  		<tbody>
 			<c:forEach items="${parkingAdmin.parkingPlaces}" var = "parkingPlace">

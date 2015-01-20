@@ -64,6 +64,7 @@ $( document ).ready(function() {
 	};
 	
 	var updateParkingViews = function(returnedData) {
+		alert (returnedData.name + " successfully created!");
 		$("#parkings").append($('<option/>', { 
 	        value: returnedData.id,
 	        text : returnedData.name 
@@ -113,6 +114,7 @@ $( document ).ready(function() {
 		adminsParking.append(adminAssignButton);
 	};
 	function assignAdmin(parkingID, adminName) {
+		alert(adminName + " set to administer this parking.")
 		var data = {parkingID: parkingID, adminName: adminName};
 		$.post("AssignAdmin", data).done(function(){
 			var obj = {admins: admins, currentAdmin: adminName};
