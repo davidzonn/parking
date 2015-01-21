@@ -8,8 +8,8 @@ import model.Status;
 import model.TypeReservation;
 
 public class TypeReservationDataAccess {
-
-	EntityManager em = dataAccess.DBConnect.getEntityManager();
+	DBConnect connection = new DBConnect();
+	EntityManager em = connection.getEntityManager();
 	public TypeReservation findTypeReservationByName(String name) {
 		String jpql = "SELECT tr FROM TypeReservation AS tr WHERE tr.reservationType = :name";
 		TypedQuery query = em.createQuery(jpql, TypeReservation.class).setParameter("name", name); 

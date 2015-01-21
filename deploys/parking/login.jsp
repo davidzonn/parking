@@ -10,3 +10,4 @@
 		<input class= "submit" type="submit" value="Login now!"/>
 	</fieldset>
 </form>
+Don't have an account? <a href = "createAccount.jsp">Create one now!</a>

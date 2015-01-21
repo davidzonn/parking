@@ -15,8 +15,10 @@ import model.TypeReservation;
 import model.User;
 
 public class ParkingDataAccess {
-	EntityManager em = dataAccess.DBConnect.getEntityManager();
+	DBConnect connection = new DBConnect();
+	EntityManager em = connection.getEntityManager();
 	int parkingPlaceNumber;
+	
 	public Collection<Parking> getParkings() {
 		String jpql = "SELECT p FROM Parking AS p";
 		TypedQuery<Parking> query = em.createQuery(jpql, Parking.class); 
@@ -39,9 +41,9 @@ public class ParkingDataAccess {
 		int numRegular = numVehicles - numTrucks - numVIP;
 		List<ParkingPlace> parkingPlaces = new ArrayList<ParkingPlace>();
 		parking.setParkingPlaces(parkingPlaces);
-		add(parking, parkingPlaces, "Car", numRegular);
-		add(parking, parkingPlaces, "Truck", numTrucks);
 		add(parking, parkingPlaces, "VIP", numVIP);
+		add(parking, parkingPlaces, "Truck", numTrucks);
+		add(parking, parkingPlaces, "Car", numRegular);
 		em.persist(parking);
 		em.flush();
 		em.getTransaction().commit();

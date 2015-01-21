@@ -11,15 +11,15 @@ public class DBConnect {
 	private static EntityManagerFactory getEMFactory() {
 		return Persistence.createEntityManagerFactory( DBNAME );
 	}
-	public static EntityManager getEntityManager() {
+	public EntityManager getEntityManager() {
 		return getEMFactory().createEntityManager();
 	}
-	public static Query getQuery(String sql) {
+	public Query getQuery(String sql) {
 		EntityManager em = getEntityManager();
 		Query query = em.createNativeQuery(sql);
 		return query;
 	}
-	public static Query getQuery(String sql, Class<java.io.Serializable> type) {
+	public Query getQuery(String sql, Class<java.io.Serializable> type) {
 		EntityManager em = getEntityManager();
 		Query query = em.createNativeQuery(sql);
 		return query;

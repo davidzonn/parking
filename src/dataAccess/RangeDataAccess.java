@@ -26,10 +26,10 @@ public class RangeDataAccess {
 	}
 }
 */
-
 public class RangeDataAccess {
+	DBConnect connection = new DBConnect();
+	EntityManager em = connection.getEntityManager();
 	public List<Range> getRanges() {
-		EntityManager em = dataAccess.DBConnect.getEntityManager();
 		String jpql = "SELECT r FROM Range AS r";
 		TypedQuery query = em.createQuery(jpql, Range.class); 
 		List<Range> results = query.getResultList();

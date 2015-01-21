@@ -15,12 +15,10 @@ import model.ParkingPlace;
 import model.User;
 
 public class UserDataAccess {
-	EntityManager em = DBConnect.getEntityManager();
+	DBConnect connection = new DBConnect();
+	EntityManager em = connection.getEntityManager();
 	ResultSet result;
-	DBConnect dao;
-	public UserDataAccess() {
-		dao = new DBConnect();
-	}
+
 	/*
 	public Collection<String> resultSetToUser (ResultSet rs) {
 		Collection<String> user = new java.util.ArrayList<String>();
@@ -91,7 +89,7 @@ public class UserDataAccess {
 	}
 	public List<String> getAllAdminsNames() {
 		String sql = "SELECT a.username FROM USER a WHERE a.ACCESS_LEVEL = 2";
-		Query query = DBConnect.getQuery(sql);
+		Query query = connection.getQuery(sql);
 		List<String> results = query.getResultList();
 		return results;
 	}
@@ -101,5 +99,15 @@ public class UserDataAccess {
 		query = query.setParameter("usr", adminName);
 		List<User> users = query.getResultList();
 		return users.isEmpty()? null: users.get(0);
+	}
+	public void createUser(String username, String password) {
+		User user = new User();
+		user.setAccessLevel(1);
+		user.setUsername(username);
+		user.setPassword(password);
+		em.getTransaction().begin();
+		em.persist(user);
+		em.getTransaction().commit();
+		em.close();
 	}
 }

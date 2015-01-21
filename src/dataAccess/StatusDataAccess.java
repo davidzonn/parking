@@ -8,7 +8,8 @@ import model.Parking;
 import model.Status;
 
 public class StatusDataAccess {
-	EntityManager em = dataAccess.DBConnect.getEntityManager();
+	DBConnect connection = new DBConnect();
+	EntityManager em = connection.getEntityManager();
 	public Status findStatusByName(String name) {
 		String jpql = "SELECT s FROM Status AS s WHERE s.statusName = :name";
 		TypedQuery query = em.createQuery(jpql, Status.class).setParameter("name", name); 

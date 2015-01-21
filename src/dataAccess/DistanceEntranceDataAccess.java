@@ -5,10 +5,9 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import model.DistanceEntrance;
-import model.Status;
-
 public class DistanceEntranceDataAccess {
-	EntityManager em = dataAccess.DBConnect.getEntityManager();
+	DBConnect connection = new DBConnect();
+	EntityManager em = connection.getEntityManager();
 	public DistanceEntrance findDistanceEntranceByName(String name) {
 		String jpql = "SELECT d FROM DistanceEntrance AS d WHERE d.distanceName = :name";
 		TypedQuery query = em.createQuery(jpql, DistanceEntrance.class).setParameter("name", name); 

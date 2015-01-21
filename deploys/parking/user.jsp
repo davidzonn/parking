@@ -4,13 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Reservation Management</title>
+	<link rel="stylesheet" type="text/css" href="styles/header.css">
+	<link rel="stylesheet" type="text/css" href="styles/forms.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Reservation Management</title>
 </head>
 <body>
-	<header>
-		<h1>Go Park Yourself</h1>
-	</header>
+	<jsp:include page="WEB-INF/jspf/header.jsp"></jsp:include>
 	<section>
 			<c:if test="${user != null}">
 				<div id = "welcomeMessage">Welcome ${user.username}!</div>
@@ -83,7 +83,7 @@
 						<fieldset>
 							<legend>Destination Selection</legend>
 							<c:forEach items="${destinations}" var="destination">
-								<label for="${destination.destinationName}">${destination.destinationName}</label>
+								<label for="${destination.destinationName}">${destination.destinationName}, &euro;${destination.destinationPrice}</label>
 								<input type="radio" name="destination" id="${destination.destinationName}" value="${destination.destinationName}"><br>
 							</c:forEach>
 						</fieldset>

@@ -4,10 +4,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Reservation Management</title>
+	<link rel="stylesheet" type="text/css" href="styles/header.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Reservation Management</title>
 </head>
 <body>
+	<jsp:include page="WEB-INF/jspf/header.jsp"></jsp:include>
 	<c:if test="${user.accessLevel == 3}">
 		<section>
 			<form id="newParking">
@@ -38,11 +40,11 @@
 				</button-->
 			</fieldset>
 		</section>
-		<section>
+		<!-- section>
 			<header>Admin Managment</header>	
 			Update Admin
 			Assign Admin
-		</section>
+		</section-->
 		<jsp:include page="logout.jsp"/>
 	</c:if>
 	<c:if test="${user.accessLevel < 3}">

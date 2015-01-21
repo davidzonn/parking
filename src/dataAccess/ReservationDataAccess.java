@@ -19,7 +19,8 @@ import model.Status;
 import model.TypeReservation;
 
 public class ReservationDataAccess {
-	EntityManager em = DBConnect.getEntityManager();
+	DBConnect connection = new DBConnect();
+	EntityManager em = connection.getEntityManager();
 	public List<TypeReservation> getReservationTypes(){
 		List<TypeReservation> reservations;
 		String jpql = "SELECT t FROM TypeReservation AS t";
